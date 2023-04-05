@@ -1,11 +1,25 @@
 const express = require('express');
 const app = express();
-const User = require('./models/User');
+const User = require('./src/models/User');
 
 app.use(express.json());
 
-app.get("/", async(req, res) => {
-    res.send("Pagina inicial"); 
+app.get('/usuarios', async(req, res) => {
+
+    await User.findAll({
+        attributes: ['nome', 'email', 'telefone', 'cep']
+    })
+        .then((userhome) => {
+            return res.json({
+                erro: false,
+                userhome
+            });
+        }).catch(() => {
+            return res.status(400).json({
+                erro: true,
+                mensagem: "Erro: Nenhum valor encontrado para a página home!"
+            });
+        });
 });
 
 app.post("/cadastrar", async(req, res) => {
@@ -20,14 +34,14 @@ app.post("/cadastrar", async(req, res) => {
     }).catch(() => {
         return res.status(400).json({
             erro: true,
-            mensagem: "ERRO: Usuario não cadastrado com sucesso!"
+            mensagem: "ERRO: Usuario não cadastrado!"
         });
     });
 });
 
 app.listen(8080, () => { 
     console.log("Servidor inciado na porta 8080: http//localhost:8080")
-})
+});
 
 
 
