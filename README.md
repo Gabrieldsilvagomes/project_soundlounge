@@ -1,4 +1,4 @@
-COMO RODAR O PROJETO BAIXADO
+  n COMO RODAR O PROJETO BAIXADO
 Baixar todas as dependencias indicadas pele packge.json
 ### npm install
 
